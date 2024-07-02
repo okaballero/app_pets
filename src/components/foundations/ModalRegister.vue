@@ -16,6 +16,7 @@
                         <input type="text" class="form-control" v-model="inputs.name">
                     </div>
 
+
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Dirección:</label>
                         <input type="text" class="form-control" v-model="inputs.address">
@@ -28,22 +29,27 @@
 
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Correo institucional:</label>
-                        <input type="text" class="form-control" v-model="inputs.email_foundation">
+                        <input type="text" class="form-control" v-model="inputs.email">
                     </div>
 
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre de contacto:</label>
-                        <input type="text" class="form-control" v-model="inputs.name_contact">
+                        <input type="text" class="form-control" v-model="inputs.contact_name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Apellido del contacto:</label>
+                        <input type="text" class="form-control" v-model="inputs.contact_last_name">
                     </div>
 
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Teléfono de contacto:</label>
-                        <input type="text" class="form-control" v-model="inputs.phone_contact">
+                        <input type="text" class="form-control" v-model="inputs.contact_pone">
                     </div>
 
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Correo de contacto:</label>
-                        <input type="text" class="form-control" v-model="inputs.email_contact">
+                        <input type="text" class="form-control" v-model="inputs.contact_email">
                     </div>
 
                     </form>
@@ -59,6 +65,8 @@
 </template>
 <script>
 import AlertsForm from '../general/AlertsForm.vue'
+
+
 export default{
     name: 'ModalRegister',
     components:{
@@ -68,19 +76,23 @@ export default{
         return {
             inputs:{
                 name: '',
+                last_name: '',
                 address: '',
+                lat: '209384848',
+                lng: '-12939.09899',
                 phone: '',
-                email_foundation: '',
-                name_contact: '',
-                phone_contact: '',
-                email_contact: ''
+                email: '',
+                contact_name: '',
+                contact_last_name: '',
+                contact_pone: '',
+                contact_email: ''
             },
             type_alert: '',
             msg_alert: ''
         }
     },
     methods:{
-        save_register(){
+        async save_register(){
             console.log('llegaron los parametros', this.inputs)
             if(this.inputs.name == ''){
                 this.type_alert = 'error'
@@ -103,38 +115,49 @@ export default{
                 return;
             }
 
-            if(this.inputs.email_foundation == ''){
+            if(this.inputs.email == ''){
                 console.log('El campo correo de fundación es requerido');
                 this.type_alert = 'error'
                 this.msg_alert= 'El campo correo de fundación es requerido'
                 return;
             }
 
-            if(this.inputs.name_contact == ''){
-                console.log('El campo nombre de contacto de fundación es requerido');
-                this.type_alert = 'error'
-                this.msg_alert= 'El campo nombre de contacto de fundación es requerido'
-                return;
-            }
+            // if(this.inputs.name_contact == ''){
+            //     console.log('El campo nombre de contacto de fundación es requerido');
+            //     this.type_alert = 'error'
+            //     this.msg_alert= 'El campo nombre de contacto de fundación es requerido'
+            //     return;
+            // }
 
-            if(this.inputs.phone_contact == ''){
-                console.log('El campo telefono de contacto de fundación es requerido');
-                this.type_alert = 'error'
-                this.msg_alert= 'El campo teléfono de contacto de fundación es requerido'
-                return;
-            }
+            // if(this.inputs.phone_contact == ''){
+            //     console.log('El campo telefono de contacto de fundación es requerido');
+            //     this.type_alert = 'error'
+            //     this.msg_alert= 'El campo teléfono de contacto de fundación es requerido'
+            //     return;
+            // }
 
-            if(this.inputs.email_contact == ''){
-                console.log('El campo email de contacto de fundación es requerido');
-                this.type_alert = 'error'
-                this.msg_alert= 'El campo email de contacto de fundación es requerido'
-                return;
-            }
+            // if(this.inputs.email_contact == ''){
+            //     console.log('El campo email de contacto de fundación es requerido');
+            //     this.type_alert = 'error'
+            //     this.msg_alert= 'El campo email de contacto de fundación es requerido'
+            //     return;
+            // }
 
-            this.type_alert = 'success'
-            this.msg_alert= 'El formulario esta completo y listo para enviar '
-            console.log('El formulario esta completo y listo para enviar ');
-            this.inputs={}
+            let url_api = 'http://127.0.0.1:8001/api/register_asociation';
+
+            const response = await fetch(url_api,{ 
+                method: 'POST',
+                headers:{
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(this.inputs)
+            });
+
+            console.log('respuesta api', response)
+            // this.type_alert = 'success'
+            // this.msg_alert= 'El formulario esta completo y listo para enviar '
+            // console.log('El formulario esta completo y listo para enviar ');
+            // this.inputs={}
         }
 
     }   

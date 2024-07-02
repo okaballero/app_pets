@@ -3,8 +3,14 @@ import HomeView from '../views/HomeView.vue'
 import FoundationView from '../views/FoundationView.vue'
 import PetsView from '../views/PetsView.vue'
 import ReportPetView from '../views/ReportPetView'
+import LoginView from '../views/LoginView.vue'
 
 const routes = [
+  {
+    path: '/acceso',
+    name: 'Acceso',
+    component: LoginView,
+  },
   {
     path: '/',
     name: 'home',

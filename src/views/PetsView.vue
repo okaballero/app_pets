@@ -13,6 +13,8 @@ export default {
     }
   },
   created() {
+    let variable_name = localStorage.getItem('name');
+    console.log('variable_name:: ', variable_name)
   }
 }
 </script>
