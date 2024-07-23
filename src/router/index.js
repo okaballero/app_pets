@@ -4,6 +4,10 @@ import FoundationView from '../views/FoundationView.vue'
 import PetsView from '../views/PetsView.vue'
 import ReportPetView from '../views/ReportPetView'
 import LoginView from '../views/LoginView.vue'
+import DasboardView from '@/views/Admin/DasboardView.vue'
+import DasboardAsociacionView from '@/views/Asociacion/DasboardAsociacionView.vue'
+import DasboardAdoptanteView from '@/views/Adoptante/DasboardAdoptanteView.vue'
+import UserDetailView from '@/views/Admin/UserDetailView.vue'
 
 const routes = [
   {
@@ -39,6 +43,31 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+
+  // Admin
+  {
+    path: '/admin/users',
+    name: 'UsersAdmin',
+    component: DasboardView
+  },
+  {
+    path: '/admin/user/:id',
+    name: 'UserDetail',
+    component: UserDetailView,
+    props: true // Esto permite pasar las variables como props al componente
+  },
+  // Asociaciones
+  {
+    path: '/asociacion/dashboard',
+    name: 'DashboardAsociacion',
+    component: DasboardAsociacionView
+  },
+  // Adoptantes
+  {
+    path: '/adoptante/dashboard',
+    name: 'DashboardAdoptante',
+    component: DasboardAdoptanteView
   }
 ]
 

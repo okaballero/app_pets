@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg" style="background-color: #dfeff4;"> 
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="@/assets/logo_pr.png" alt="Patitas al rescate" width="80">
@@ -32,6 +32,10 @@
                     <li class="nav-item">
                         <router-link to="/acceso" class="nav-link">Login</router-link>
                     </li>
+
+                    <li class="nav-item">
+                        <router-link  class="nav-link"> Bienvenido {{ (userSession)?userSession.name:'' }}</router-link>
+                    </li>
                 </ul>
 
             </div>
@@ -39,10 +43,22 @@
     </nav>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
-  name: 'NavBar',
-  props: {
-    type_btn: String
-  }
+    name: 'NavBar',
+    props: {
+        type_btn: String
+    },
+    mounted(){
+            this.loadUserSession();
+    },
+    computed: {
+        ...mapState(['userSession']),        
+    },
+    methods:{
+        ...mapActions(['saveUserSession', 'loadUserSession', 'clearUserSession']),
+    }
+
 }
 </script>
